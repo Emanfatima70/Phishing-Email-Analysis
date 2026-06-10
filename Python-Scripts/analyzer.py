@@ -1,19 +1,49 @@
-# Simple Phishing Email Analyzer (SOC Level Beginner Tool)
+# SOC Multi-Email Phishing Analyzer
 
-email = open("Samples/email1.txt", "r").read()
+import os
 
-print("=== EMAIL ANALYSIS REPORT ===\n")
+folder = "Samples"
 
-# Check sender
-if "paypal" in email or "security" in email:
-    print("[!] Suspicious sender detected")
+files = os.listdir(folder)
 
-# Check urgency keywords
-if "urgent" in email.lower():
-    print("[!] Urgent language detected (possible phishing)")
+print("=== SOC EMAIL ANALYSIS DASHBOARD ===\n")
 
-# Check fake links
-if "http://" in email:
-    print("[!] Insecure link found")
+total_score = 0
 
-print("\n=== ANALYSIS COMPLETE ===")# Email Header Analyzer 
+for file in files:
+    path = f"{folder}/{file}"
+    email = open(path, "r", encoding="utf-8").read().lower()
+
+    print(f"\nAnalyzing: {file}")
+    score = 0
+
+    if "paypal" in email or "netflix" in email:
+        print("[HIGH RISK] Fake brand impersonation")
+        score += 40
+
+    if "urgent" in email or "immediately" in email:
+        print("[MEDIUM RISK] Urgency detected")
+        score += 20
+
+    if "http://" in email:
+        print("[HIGH RISK] Suspicious link detected")
+        score += 30
+
+    keywords = ["verify", "password", "login", "account", "suspend"]
+    for k in keywords:
+        if k in email:
+            print(f"[INFO] Keyword found: {k}")
+            score += 5
+
+    print("Score:", score)
+    total_score += score
+
+print("\n======================")
+print("TOTAL SOC SCORE:", total_score)
+
+if total_score >= 120:
+    print("RESULT: 🚨 MULTIPLE HIGH RISK PHISHING EMAILS")
+elif total_score >= 60:
+    print("RESULT: ⚠️ SUSPICIOUS ACTIVITY DETECTED")
+else:
+    print("RESULT: ✅ LOW RISK")
