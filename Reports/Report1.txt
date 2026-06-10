@@ -1,1 +1,16 @@
-Phishing Email Analysis Report 
+Phishing Email Analysis Report
+
+Sender Email:
+support@paypal-security.com
+
+Subject:
+Urgent! Verify Your Account
+
+Indicators of Compromise (IOCs):
+
+- Suspicious sender domain
+- Urgent language used
+- Possible phishing attempt
+
+Conclusion:
+This email appears to be a phishing email. Phishing Email Analysis Report 
